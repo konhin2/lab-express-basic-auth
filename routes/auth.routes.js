@@ -2,9 +2,9 @@ const router = require('express').Router()
 const bcryptjs = require('bcryptjs')
 const mongoose = require('mongoose')
 const User = require('./../models/User.model')
-
+const { isLoggedIn, isLoggedOut } = require("./../middleware/route-guard")
 // Get - Display the signup page
-router.get('/signup', (req, res) => {
+router.get('/signup', isLoggedOut, (req, res) => {
     res.render('auth/signup')
 })
 
@@ -50,7 +50,7 @@ router.post('/signup', (req, res) => {
 })
 
 // GET - Ruta para la pagina del /userprofile
-router.get('/userprofile', (req, res) => {
+router.get('/userprofile', isLoggedIn, (req, res) => {
     res.render('users/user-profile', {
         user: req.session.currenUser
     })

@@ -26,7 +26,12 @@ const projectName = 'lab-express-basic-auth';
 const capitalized = string => string[0].toUpperCase() + string.slice(1).toLowerCase();
 
 app.locals.title = `${capitalized(projectName)}- Generated with Ironlauncher`;
-
+// Layout Middleware
+app.use((req, res, next) => {
+    res.locals.currenUser = req.session.currenUser
+    next()
+  })
+  
 // 👇 Start handling routes here
 const index = require('./routes/index');
 app.use('/', index);
